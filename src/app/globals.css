@@ -10,6 +10,7 @@
   --primary: #e57b34;
   --secondary: #f2bb3a;
   --accent: #e599661f;
+  --background: #fbf8f6;
 }
 @media (prefers-color-scheme: light) {
   :root {
@@ -17,7 +18,6 @@
     --background: #fbf8f6;
     --primary: #e57b34;
     --secondary: #f2bb3a;
-    --pri: #e57b34;
     /* --accent: #e59966; */
     --accent: #e599661f;
   }
@@ -35,7 +35,6 @@ body {
   color: var(--text);
   font-family: Raleway, Helvetica, sans-serif;
   height: 100vh;
-  /* min-height: 100vh; */
 }
 
 @layer utilities {

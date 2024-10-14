@@ -4,7 +4,7 @@ type BodyLayoutProps = { className?: string; children: React.ReactNode };
 
 const BodyLayout = ({ className, children }: BodyLayoutProps) => {
   return (
-    <div className={cn("bg-accent h-full rounded-t-lg p-6", className)}>
+    <div className={cn("bg-accent h-full rounded-lg p-6", className)}>
       {children}
     </div>
   );

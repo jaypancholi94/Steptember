@@ -1,13 +1,24 @@
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { Calendar, Footprints, Hash } from "lucide-react";
+
+export type DataProps = { date: Date; steps: number };
 
 type StepTableProps = {
   className?: string;
-  data: { date: string; stepCount: number }[];
+  data: DataProps[];
 };
 
 const StepTable: React.FC<StepTableProps> = ({ className, data }) => {
   const spacingStyle = "py-4 border-dashed border-t-2";
+
+  if (!data.length)
+    return (
+      <p className="text-center px-6 py-8 opacity-90">
+        Did your legs go on vacation? 🏖️ No steps today, but there&apos;s always
+        tomorrow!
+      </p>
+    );
+
   return (
     <table className={cn("w-full mt-6", className)}>
       <thead>
@@ -25,16 +36,16 @@ const StepTable: React.FC<StepTableProps> = ({ className, data }) => {
       </thead>
       <tbody>
         {data.map((row, index) => (
-          <tr key={`${row.date}-${row.stepCount}`}>
+          <tr key={`${row.date}-${row.steps}`}>
             <td className={cn("w-[5%] opacity-50 pl-1", spacingStyle)}>
               {data.length - index}
             </td>
 
             <td className={cn("w-[40%] opacity-80", spacingStyle)}>
-              {row.date}
+              {formatDate(row.date)}
             </td>
             <td className={cn("w-[55%] opacity-80 text-right", spacingStyle)}>
-              {row.stepCount.toLocaleString()}
+              {row.steps.toLocaleString()}
             </td>
           </tr>
         ))}

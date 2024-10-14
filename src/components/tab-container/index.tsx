@@ -1,9 +1,21 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TABS } from "@/constants";
-import { StepTable } from "../step-table";
+import { StepTable } from "@/components/step-table";
 
-type TabContainerProps = { className?: string };
-const TabContainer: React.FC<TabContainerProps> = ({ className }) => {
+import type { DataProps } from "@/components/step-table";
+import { CaloriesBurnt } from "@/components/charts/calories-burnt";
+import { StepChart } from "../charts/steps";
+
+type TabContainerProps = {
+  className?: string;
+  stepData: DataProps[];
+  weight: number;
+};
+const TabContainer: React.FC<TabContainerProps> = ({
+  className,
+  stepData,
+  weight,
+}) => {
   return (
     <div className={className}>
       <Tabs defaultValue={TABS.STEPS}>
@@ -16,17 +28,14 @@ const TabContainer: React.FC<TabContainerProps> = ({ className }) => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value={TABS.STEPS}>
-          <StepTable
-            data={[
-              { date: "date", stepCount: 123 },
-              { date: "date", stepCount: 123 },
-              { date: "date", stepCount: 123 },
-              { date: "date", stepCount: 1235464 },
-              { date: "date", stepCount: 123 },
-            ]}
-          />
+          <StepTable data={stepData} />
         </TabsContent>
-        <TabsContent value={TABS.DASHBOARD}>bye</TabsContent>
+        <TabsContent value={TABS.DASHBOARD}>
+          <div className="mt-4">
+            <StepChart data={stepData} />
+            <CaloriesBurnt data={stepData} weight={weight} />
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
   );
