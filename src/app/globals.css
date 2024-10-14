@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --text: #16110e;
+  --background: #fbf8f6;
+  --primary: #e57b34;
+  --secondary: #f2bb3a;
+  --accent: #e599661f;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --text: #16110e;
+    --background: #fbf8f6;
+    --primary: #e57b34;
+    --secondary: #f2bb3a;
+    /* --accent: #e59966; */
+    --accent: #e599661f;
+  }
+}
+/* @media (prefers-color-scheme: dark) { */
+/*   :root { */
+/*     --text: #f1ece9; */
+/*     --background: #0b0705; */
+/*     --primary: #cb611a; */
+/*     --secondary: #c58d0d; */
+/*     --accent: #994d1a; */
+/*   } */
+/* } */
+body {
+  color: var(--text);
+  background: var(--background);
+  font-family: Raleway, Helvetica, sans-serif;
+  height: 100vh;
+  /* min-height: 100vh; */
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
