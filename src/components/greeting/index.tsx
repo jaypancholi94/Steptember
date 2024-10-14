@@ -12,8 +12,8 @@ const Greeting: React.FC<GreetingProps> = ({ name }) => {
   };
 
   return (
-    <div className="flex gap-2">
-      <h2 className="text-xl font-bold">{getGreeting()},</h2>
+    <div className="flex gap-2 flex-wrap">
+      <h2 className="text-xl font-bold text-nowrap">{getGreeting()},</h2>
       <h2 className="text-xl font-bold">{name}!</h2>
     </div>
   );
