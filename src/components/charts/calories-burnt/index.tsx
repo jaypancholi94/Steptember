@@ -4,6 +4,7 @@ import {
   BarChart,
   CartesianGrid,
   Legend,
+  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
@@ -27,14 +28,16 @@ const CaloriesBurnt = ({ data, weight }: CaloriesBurntProps) => {
   return (
     <div className="bg-white p-8 mt-4 rounded-lg">
       <h2 className="text-xl font-semibold mb-2 text-center">Calories Burnt</h2>
-      <BarChart width={600} height={300} data={transformedData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="calories" fill="var(--primary)" />
-      </BarChart>
+      <ResponsiveContainer width="100%" height={400}>
+        <BarChart width={700} height={400} data={transformedData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="calories" fill="var(--primary)" />
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
 };

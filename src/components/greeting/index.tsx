@@ -1,6 +1,9 @@
-type GreetingProps = { name: string };
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
 
-const Greeting: React.FC<GreetingProps> = ({ name }) => {
+const Greeting: React.FC = () => {
+  const name = useSelector((state: RootState) => state.user.name);
+
   const getGreeting = (): string => {
     const currentHour = new Date().getHours();
 

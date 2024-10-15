@@ -11,17 +11,29 @@ import { Info } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { USER_ERROR_INIT_VALUE } from "@/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserDetail } from "@/store/reducers/user-slice";
+import { RootState } from "@/store/store";
 
-const UserDialogBox: React.FC = () => {
+type UserDialogBoxProps = {
+  triggerButton?: React.ReactNode;
+  type: "edit" | "add";
+};
+
+const UserDialogBox: React.FC<UserDialogBoxProps> = ({
+  triggerButton,
+  type = "add",
+}) => {
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const userName = useSelector((state: RootState) => state.user.name);
+  const userWeight = useSelector((state: RootState) => state.user.weight);
+
+  const [isOpen, setIsOpen] = useState<boolean>(type === "add" ? true : false);
   const [error, setError] = useState<{ name: boolean; weight: boolean }>(
     USER_ERROR_INIT_VALUE,
   );
-  const [name, setName] = useState<string>("");
-  const [weight, setWeight] = useState<string>("");
+  const [name, setName] = useState<string>(userName);
+  const [weight, setWeight] = useState<string>(userWeight);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,7 +41,7 @@ const UserDialogBox: React.FC = () => {
 
     const isValidName = name === "";
     const isValidWeight =
-      weight === "" || parseInt(weight) < 0 || parseInt(weight) > 200;
+      weight === "" || parseInt(weight) <= 0 || parseInt(weight) > 200;
     if (name === "") {
       setError((oldValue) => ({ ...oldValue, name: true }));
     }
@@ -43,12 +55,22 @@ const UserDialogBox: React.FC = () => {
   };
 
   return (
-    <Dialog open={isOpen}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={type === "edit" ? setIsOpen : undefined}
+    >
+      {triggerButton}
       <DialogContent className="sm:max-w-[425px]" hideClose>
         <DialogHeader>
-          <DialogTitle>Let’s Get Personal! 🏃‍♂️</DialogTitle>
+          <DialogTitle>
+            {type === "add"
+              ? `Let&apos;s Get Personal! 🏃‍♂️"`
+              : `Time for a Makeover? ✨`}
+          </DialogTitle>
           <DialogDescription>
-            What should we call the step-counting legend in the making?
+            {type === "add"
+              ? "What should we call the step-counting legend in the making?"
+              : "Go ahead, update your info! Your step game is still strong!"}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>

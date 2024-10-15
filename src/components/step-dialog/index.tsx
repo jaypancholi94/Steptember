@@ -1,6 +1,6 @@
 "use client";
 
-import { Info, Plus } from "lucide-react";
+import { Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,28 +9,44 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { STEP_ERROR_INIT_VALUE } from "@/constants";
-import { useDispatch } from "react-redux";
-import { addSteps } from "@/store/reducers/step-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { addSteps, modfiySteps } from "@/store/reducers/step-slice";
 import { cn } from "@/lib/utils";
+import { RootState } from "@/store/store";
 
 type ErrorProps = { date: boolean; step: boolean };
+type StepDialogProps = {
+  stepIndex?: number;
+  triggerButton: React.ReactNode;
+};
 
-const AddStopIsland = () => {
+const StepDialog: React.FC<StepDialogProps> = ({
+  stepIndex,
+  triggerButton,
+}) => {
   const dispatch = useDispatch();
-  const [dateValue, setDateValue] = useState<string>("");
-  const [stepValue, setStepValue] = useState<string>("");
+  const stepData = useSelector((state: RootState) => state.step.data);
+
+  const [dateValue, setDateValue] = useState<string>(
+    stepIndex === undefined
+      ? ""
+      : stepData[stepIndex].date.toISOString().split("T")[0],
+  );
+  const [stepValue, setStepValue] = useState<string>(
+    stepIndex === undefined ? "" : stepData[stepIndex].steps.toString(),
+  );
+  console.log("date", dateValue);
   const [error, setError] = useState<ErrorProps>(STEP_ERROR_INIT_VALUE);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const resetAndCloseDialogBox = () => {
-    setIsOpen(false);
     setDateValue("");
     setStepValue("");
     setError(STEP_ERROR_INIT_VALUE);
+    setIsOpen(false);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,28 +64,33 @@ const AddStopIsland = () => {
     if (dateValue === "" || !isWholeNumber) return;
 
     const steps = parseInt(stepValue as string);
-    dispatch(addSteps({ date: dateValue, steps }));
+    if (stepIndex === undefined) {
+      dispatch(addSteps({ date: dateValue, steps }));
+    } else {
+      dispatch(modfiySteps({ date: dateValue, steps, index: stepIndex }));
+    }
     resetAndCloseDialogBox();
   };
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button className="group fixed bottom-8 right-8 flex gap-2 rounded-lg cursor-pointer">
-          <Plus strokeWidth={3} className="group-hover:animate-spin" />{" "}
-          <span className="font-semibold">Add Step</span>
-        </Button>
-      </DialogTrigger>
+      {triggerButton}
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Add Your Steps</DialogTitle>
+          <DialogTitle>
+            {stepIndex !== undefined
+              ? `Add Your Steps`
+              : `Time to Tweak Those Steps?`}
+          </DialogTitle>
           <DialogDescription>
             <p className="font-semibold">
-              Track your daily activity effortlessly! Enter the number of steps
+              Track your daily activity effortlessly!
             </p>
             <p className="opacity-60">
-              you&apos;ve taken today to keep an accurate record of your fitness
+              {stepIndex !== undefined
+                ? `you&apos;ve taken today to keep an accurate record of your fitness
               journey. Monitoring your steps helps you stay motivated and reach
-              your health goals. Let&apos;s make every step count!
+              your health goals. Let&apos;s make every step count!`
+                : `Missed a step? Overshot? No worries! Make your changes and step confidently into the future.`}
             </p>
           </DialogDescription>
         </DialogHeader>
@@ -110,7 +131,7 @@ const AddStopIsland = () => {
                   setStepValue(e.target.value);
                 }}
               />
-              {error.date && (
+              {error.step && (
                 <div className="flex gap-1 items-center mt-1">
                   <Info size={16} className="text-red-400" />
 
@@ -130,4 +151,4 @@ const AddStopIsland = () => {
   );
 };
 
-export { AddStopIsland };
+export { StepDialog };

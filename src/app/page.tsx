@@ -1,13 +1,16 @@
 "use client";
 
-import { AddStopIsland } from "@/components/add-step-island";
 import { Greeting } from "@/components/greeting";
 import { Header } from "@/components/header";
 import { BodyLayout } from "@/components/layout/body";
 import { CurrentStatus } from "@/components/status";
+import { StepDialog } from "@/components/step-dialog";
 import { TabContainer } from "@/components/tab-container";
+import { Button } from "@/components/ui/button";
+import { DialogTrigger } from "@/components/ui/dialog";
 import { UserDialogBox } from "@/components/user-dialog-box";
 import { RootState } from "@/store/store";
+import { Plus, UserRoundPen } from "lucide-react";
 import { useSelector } from "react-redux";
 
 export default function Home() {
@@ -19,12 +22,30 @@ export default function Home() {
   return (
     <div className="min-h-full">
       <Header />
-      {userName && userWeight ? (
+      {userName && userWeight > 0 ? (
         <>
           <main className="container mx-auto h-full">
             <BodyLayout>
-              <Greeting name={userName} />
-              <CurrentStatus weight={userWeight} totalSteps={totalSteps} />
+              <Greeting />
+              <UserDialogBox
+                triggerButton={
+                  <DialogTrigger asChild>
+                    <Button
+                      className="group flex gap-1 rounded-lg cursor-pointer p-0 h-fit"
+                      variant={"link"}
+                    >
+                      <UserRoundPen strokeWidth={3} size={14} />
+                      <span className="font-semibold">Edit</span>
+                    </Button>
+                  </DialogTrigger>
+                }
+                type="edit"
+              />
+              <CurrentStatus
+                weight={userWeight}
+                totalSteps={totalSteps}
+                numberOfEntries={stepData.length}
+              />
               <TabContainer
                 className="mt-4"
                 stepData={stepData}
@@ -32,10 +53,19 @@ export default function Home() {
               />
             </BodyLayout>
           </main>
-          <AddStopIsland />
+          <StepDialog
+            triggerButton={
+              <DialogTrigger asChild>
+                <Button className="group fixed bottom-8 right-8 flex gap-2 rounded-lg cursor-pointer">
+                  <Plus strokeWidth={3} className="group-hover:animate-spin" />
+                  <span className="font-semibold">Add Step</span>
+                </Button>
+              </DialogTrigger>
+            }
+          />
         </>
       ) : (
-        <UserDialogBox />
+        <UserDialogBox type="add" />
       )}
     </div>
   );

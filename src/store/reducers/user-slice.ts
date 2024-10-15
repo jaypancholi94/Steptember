@@ -1,18 +1,14 @@
+import { getLocalUserData, updateLocalUserData } from "@/lib/utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface UserState {
+export interface UserState {
   name: string;
   weight: number;
 }
 
-const initialState: UserState = {
-  name: "",
-  weight: 0,
-};
-
 const userSlice = createSlice({
   name: "user",
-  initialState,
+  initialState: getLocalUserData(),
   reducers: {
     setUserDetail: (
       state,
@@ -20,6 +16,7 @@ const userSlice = createSlice({
     ) => {
       state.name = action.payload.name;
       state.weight = action.payload.weight;
+      updateLocalUserData(state);
     },
   },
 });

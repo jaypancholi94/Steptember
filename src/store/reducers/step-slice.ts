@@ -1,19 +1,22 @@
-import { sumUpSteps } from "@/lib/utils";
+import {
+  getLocalStepsData,
+  sumUpSteps,
+  updateLocalStepsData,
+} from "@/lib/utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface StepState {
-  data: { date: Date; steps: number }[];
+export interface DataProps {
+  date: Date;
+  steps: number;
+}
+export interface StepState {
+  data: DataProps[];
   total: number;
 }
 
-const initialState: StepState = {
-  data: [],
-  total: 0,
-};
-
 const stepSlice = createSlice({
   name: "step",
-  initialState,
+  initialState: getLocalStepsData(),
   reducers: {
     addSteps: (
       state,
@@ -35,9 +38,40 @@ const stepSlice = createSlice({
 
       state.data = _steps;
       state.total = sumUpSteps(state.data);
+      updateLocalStepsData(state.data);
+    },
+    modfiySteps: (
+      state,
+      action: PayloadAction<{ date: string; steps: number; index: number }>,
+    ) => {
+      const { date, steps, index } = action.payload;
+      const _steps = [...state.data];
+      const _date = new Date(date);
+
+      const existingDateIndex = _steps.findIndex(
+        (step) => step.date.getTime() === _date.getTime(),
+      );
+      if (existingDateIndex !== -1 && existingDateIndex !== index) {
+        console.log("-1");
+        _steps[existingDateIndex].steps += steps;
+        _steps.splice(index, 1);
+      } else {
+        console.log("0");
+        _steps[index] = { date: new Date(date), steps };
+      }
+      state.data = _steps;
+      state.total = sumUpSteps(state.data);
+      updateLocalStepsData(state.data);
+    },
+    removeSteps: (state, action: PayloadAction<number>) => {
+      const _steps = [...state.data];
+      _steps.splice(action.payload, 1);
+      state.data = _steps;
+      state.total = sumUpSteps(state.data);
+      updateLocalStepsData(state.data);
     },
   },
 });
 
-export const { addSteps } = stepSlice.actions;
+export const { addSteps, modfiySteps, removeSteps } = stepSlice.actions;
 export default stepSlice.reducer;

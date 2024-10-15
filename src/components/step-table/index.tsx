@@ -1,5 +1,9 @@
 import { cn, formatDate } from "@/lib/utils";
-import { Calendar, Footprints, Hash } from "lucide-react";
+import { Calendar, FilePenLine, Footprints, Hash } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { StepDialog } from "@/components/step-dialog";
+import { DialogTrigger } from "@/components/ui/dialog";
+import { StepRemoveDialog } from "../step-remove-dialog";
 
 export type DataProps = { date: Date; steps: number };
 
@@ -32,6 +36,7 @@ const StepTable: React.FC<StepTableProps> = ({ className, data }) => {
           <th className="opacity-80 flex justify-end pb-4">
             <Footprints size={18} />
           </th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -44,8 +49,26 @@ const StepTable: React.FC<StepTableProps> = ({ className, data }) => {
             <td className={cn("w-[40%] opacity-80", spacingStyle)}>
               {formatDate(row.date)}
             </td>
-            <td className={cn("w-[55%] opacity-80 text-right", spacingStyle)}>
+            <td className={cn("w-[45%] opacity-80 text-right", spacingStyle)}>
               {row.steps.toLocaleString()}
+            </td>
+            <td className={cn("w-[10%]", spacingStyle)}>
+              <div className="flex gap-2 justify-center">
+                <StepDialog
+                  triggerButton={
+                    <DialogTrigger asChild>
+                      <Button
+                        variant={"ghost"}
+                        className="p-0 opacity-60 hover:opacity-100"
+                      >
+                        <FilePenLine size={18} />
+                      </Button>
+                    </DialogTrigger>
+                  }
+                  stepIndex={index}
+                />
+                <StepRemoveDialog stepIndex={index} />
+              </div>
             </td>
           </tr>
         ))}
