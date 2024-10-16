@@ -1,4 +1,4 @@
-import { formatDate } from "@/lib/utils";
+import { formatDate } from '@/lib/utils';
 import {
   Bar,
   BarChart,
@@ -8,23 +8,32 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts";
-import { DataProps } from "@/components/step-table";
+} from 'recharts';
+import { DataProps } from '@/components/step-table';
+import { memo, useCallback, useMemo } from 'react';
 
 type CaloriesBurntProps = { data: DataProps[]; weight: number };
-const CaloriesBurnt = ({ data, weight }: CaloriesBurntProps) => {
-  const calculateCalories = (steps: number) => {
-    let caloriesBurnt = 0;
-    if (weight <= 50) caloriesBurnt = 0.04;
-    if (weight > 50 && weight <= 70) caloriesBurnt = 0.05;
-    if (weight > 70) caloriesBurnt = 0.06;
-    return steps * caloriesBurnt;
-  };
-  const transformedData = data.map(({ date, steps }) => ({
-    date: formatDate(date),
-    steps,
-    calories: calculateCalories(steps),
-  }));
+
+const CaloriesBurnt: React.FC<CaloriesBurntProps> = memo(({ data, weight }) => {
+  const calculateCalories = useCallback(
+    (steps: number) => {
+      let caloriesBurnt = 0;
+      if (weight <= 50) caloriesBurnt = 0.04;
+      if (weight > 50 && weight <= 70) caloriesBurnt = 0.05;
+      if (weight > 70) caloriesBurnt = 0.06;
+      return steps * caloriesBurnt;
+    },
+    [weight]
+  );
+  const transformedData = useMemo(
+    () =>
+      data.map(({ date, steps }) => ({
+        date: formatDate(date),
+        steps,
+        calories: calculateCalories(steps),
+      })),
+    [data, calculateCalories]
+  );
   return (
     <div className="bg-white p-8 mt-4 rounded-lg">
       <h2 className="text-xl font-semibold mb-2 text-center">Calories Burnt</h2>
@@ -40,6 +49,8 @@ const CaloriesBurnt = ({ data, weight }: CaloriesBurntProps) => {
       </ResponsiveContainer>
     </div>
   );
-};
+});
+
+CaloriesBurnt.displayName = 'CaloriesBurnt';
 
 export { CaloriesBurnt };

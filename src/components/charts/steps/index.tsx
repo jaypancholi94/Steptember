@@ -1,5 +1,6 @@
-import { DataProps } from "@/components/step-table";
-import { formatDate } from "@/lib/utils";
+import { DataProps } from '@/components/step-table';
+import { formatDate } from '@/lib/utils';
+import { memo } from 'react';
 import {
   LineChart,
   CartesianGrid,
@@ -9,9 +10,13 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
-} from "recharts";
+} from 'recharts';
 
-const StepChart = ({ data }: { data: DataProps[] }) => {
+type StepChartProps = {
+  data: DataProps[];
+};
+
+const StepChart: React.FC<StepChartProps> = memo(({ data }) => {
   const transformedData = data.map(({ date, steps }) => ({
     date: formatDate(date),
     steps,
@@ -32,6 +37,8 @@ const StepChart = ({ data }: { data: DataProps[] }) => {
       </ResponsiveContainer>
     </div>
   );
-};
+});
+
+StepChart.displayName = 'StepChart';
 
 export { StepChart };

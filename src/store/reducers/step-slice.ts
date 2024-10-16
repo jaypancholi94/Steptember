@@ -2,32 +2,32 @@ import {
   getLocalStepsData,
   sumUpSteps,
   updateLocalStepsData,
-} from "@/lib/utils";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+} from '@/lib/utils';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface DataProps {
+export type DataProps = {
   date: Date;
   steps: number;
-}
-export interface StepState {
+};
+export type StepState = {
   data: DataProps[];
   total: number;
-}
+};
 
 const stepSlice = createSlice({
-  name: "step",
+  name: 'step',
   initialState: getLocalStepsData(),
   reducers: {
     addSteps: (
       state,
-      action: PayloadAction<{ date: string; steps: number }>,
+      action: PayloadAction<{ date: string; steps: number }>
     ) => {
       const { date, steps } = action.payload;
       let _steps = [...state.data];
       const _date = new Date(date);
 
       const existingDateIndex = _steps.findIndex(
-        (step) => step.date.getTime() === _date.getTime(),
+        (step) => step.date.getTime() === _date.getTime()
       );
       if (existingDateIndex !== -1) {
         _steps[existingDateIndex].steps += steps;
@@ -42,21 +42,21 @@ const stepSlice = createSlice({
     },
     modfiySteps: (
       state,
-      action: PayloadAction<{ date: string; steps: number; index: number }>,
+      action: PayloadAction<{ date: string; steps: number; index: number }>
     ) => {
       const { date, steps, index } = action.payload;
       const _steps = [...state.data];
       const _date = new Date(date);
 
       const existingDateIndex = _steps.findIndex(
-        (step) => step.date.getTime() === _date.getTime(),
+        (step) => step.date.getTime() === _date.getTime()
       );
       if (existingDateIndex !== -1 && existingDateIndex !== index) {
-        console.log("-1");
+        console.log('-1');
         _steps[existingDateIndex].steps += steps;
         _steps.splice(index, 1);
       } else {
-        console.log("0");
+        console.log('0');
         _steps[index] = { date: new Date(date), steps };
       }
       state.data = _steps;

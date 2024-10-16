@@ -1,23 +1,27 @@
-"use client";
+'use client';
 
-import { Greeting } from "@/components/greeting";
-import { Header } from "@/components/header";
-import { BodyLayout } from "@/components/layout/body";
-import { CurrentStatus } from "@/components/status";
-import { StepDialog } from "@/components/step-dialog";
-import { TabContainer } from "@/components/tab-container";
-import { Button } from "@/components/ui/button";
-import { DialogTrigger } from "@/components/ui/dialog";
-import { UserDialogBox } from "@/components/user-dialog-box";
-import { RootState } from "@/store/store";
-import { Plus, UserRoundPen } from "lucide-react";
-import { useSelector } from "react-redux";
+import { Greeting } from '@/components/greeting';
+import { Header } from '@/components/header';
+import { BodyLayout } from '@/components/layout/body';
+import { CurrentStatusBar } from '@/components/status-bar';
+import { StepDialog } from '@/components/step-dialog';
+import { TabContainer } from '@/components/tab-container';
+import { Button } from '@/components/ui/button';
+import { DialogTrigger } from '@/components/ui/dialog';
+import { UserDialogBox } from '@/components/user-dialog-box';
+import { RootState } from '@/store/store';
+import { Plus, UserRoundPen } from 'lucide-react';
+import { useSelector } from 'react-redux';
 
 export default function Home() {
-  const stepData = useSelector((state: RootState) => state.step.data);
-  const totalSteps = useSelector((state: RootState) => state.step.total);
-  const userName = useSelector((state: RootState) => state.user.name);
-  const userWeight = useSelector((state: RootState) => state.user.weight);
+  const { stepData, totalSteps, userName, userWeight } = useSelector(
+    (state: RootState) => ({
+      stepData: state.step.data,
+      totalSteps: state.step.total,
+      userName: state.user.name,
+      userWeight: state.user.weight,
+    })
+  );
 
   return (
     <div className="min-h-full">
@@ -32,7 +36,7 @@ export default function Home() {
                   <DialogTrigger asChild>
                     <Button
                       className="group flex gap-1 rounded-lg cursor-pointer p-0 h-fit"
-                      variant={"link"}
+                      variant={'link'}
                     >
                       <UserRoundPen strokeWidth={3} size={14} />
                       <span className="font-semibold">Edit</span>
@@ -41,7 +45,7 @@ export default function Home() {
                 }
                 type="edit"
               />
-              <CurrentStatus
+              <CurrentStatusBar
                 weight={userWeight}
                 totalSteps={totalSteps}
                 numberOfEntries={stepData.length}
