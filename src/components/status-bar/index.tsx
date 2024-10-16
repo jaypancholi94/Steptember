@@ -36,6 +36,7 @@ const StatusCard: React.FC<StatusCardProps> = ({
           end={value}
           duration={2.75}
           className="font-semibold text-4xl"
+          decimals={value % 1 !== 0 ? 2 : 0}
         />
       </div>
       {unit && <span>{unit}</span>}
@@ -56,32 +57,36 @@ const CurrentStatusBar: React.FC<CurrentStatusBarProps> = memo(
 
     return (
       <div className="flex flex-col md:flex-row gap-2 my-4">
-        <StatusCard
-          title="Weight"
-          value={weight}
-          unit="kg"
-          Icon={Weight}
-          className="w-full md:w-1/2 lg:w-1/4"
-        />
-        <StatusCard
-          title="Total Steps"
-          value={totalSteps}
-          Icon={FootprintsIcon}
-          className="md:w-1/2 lg:w-1/4"
-        />
-        <StatusCard
-          title="Average Step Count"
-          value={averageSteps}
-          Icon={ChartLine}
-          className="md:w-1/2 lg:w-1/4"
-        />
-        <StatusCard
-          title="Total Distance Travelled"
-          value={totalDistanceTravelled}
-          Icon={Route}
-          unit="km"
-          className="md:w-1/2 lg:w-1/4"
-        />
+        <div className="flex flex-col lg:flex-row gap-2 w-full">
+          <StatusCard
+            title="Weight"
+            value={weight}
+            unit="kg"
+            Icon={Weight}
+            className="w-full "
+          />
+          <StatusCard
+            title="Total Steps"
+            value={totalSteps}
+            Icon={FootprintsIcon}
+            className="w-full "
+          />
+        </div>
+        <div className="flex flex-col lg:flex-row gap-2 w-full">
+          <StatusCard
+            title="Average Step Count"
+            value={averageSteps}
+            Icon={ChartLine}
+            className="w-full "
+          />
+          <StatusCard
+            title="Total Distance Travelled"
+            value={totalDistanceTravelled}
+            Icon={Route}
+            unit="km"
+            className="w-full "
+          />
+        </div>
       </div>
     );
   }
