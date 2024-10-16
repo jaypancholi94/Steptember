@@ -67,7 +67,7 @@ const UserDialogBox: React.FC<UserDialogBoxProps> = memo(
           <DialogHeader>
             <DialogTitle>
               {type === 'add'
-                ? `Let&apos;s Get Personal! 🏃‍♂️"`
+                ? `Let's Get Personal! 🏃‍♂️`
                 : `Time for a Makeover? ✨`}
             </DialogTitle>
             <DialogDescription>

@@ -92,9 +92,9 @@ const StepDialog: React.FC<StepDialogProps> = memo(
               </p>
               <p className="opacity-60">
                 {stepIndex !== undefined
-                  ? `you&apos;ve taken today to keep an accurate record of your fitness
+                  ? `you've taken today to keep an accurate record of your fitness
               journey. Monitoring your steps helps you stay motivated and reach
-              your health goals. Let&apos;s make every step count!`
+              your health goals. Let's make every step count!`
                   : `Missed a step? Overshot? No worries! Make your changes and step confidently into the future.`}
               </p>
             </DialogDescription>
