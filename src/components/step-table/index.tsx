@@ -56,12 +56,12 @@ const StepTable: React.FC<StepTableProps> = memo(({ className, data }) => {
                 {data.length - index}
               </td>
 
-              <td className={cn('w-[45%] md:w-[30%] opacity-80', spacingStyle)}>
+              <td className={cn('w-[20%] md:w-[30%] opacity-80', spacingStyle)}>
                 {formatDate(row.date)}
               </td>
               <td
                 className={cn(
-                  'w-[25%] md:w-[20%] opacity-80 text-right',
+                  'w-[15%] md:w-[20%] opacity-80 text-right',
                   spacingStyle
                 )}
               >
@@ -75,7 +75,7 @@ const StepTable: React.FC<StepTableProps> = memo(({ className, data }) => {
               >
                 {((row.steps * AVERAGE_STEP_LENGTH) / 1000).toFixed(2)} km
               </td>
-              <td className={cn('w-[10%]  md:w-[15%]', spacingStyle)}>
+              <td className={cn('w-[20%]  md:w-[15%]', spacingStyle)}>
                 <div className="flex gap-2 justify-center">
                   <StepDialog
                     triggerButton={
