@@ -1,8 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Steptember 🚶‍♂️
+
+Steptember is a step-tracking app that allows users to record their daily steps and view key metrics like total `steps`, `average step count`, `distance covered`, and `calories` burned based on their `weight`. The app also provides detailed insights through visual graphs.
+
+> Note: All user information, including name, weight, and step records, is stored in the browser's local storage to maintain state between sessions
+
+## Technologies Used
+
+- **[Next.js](https://nextjs.org/)**: React framework for building fast and scalable web applications.
+- **[React](https://react.dev/)**: JavaScript library for building interactive user interfaces.
+- **[Tailwind CSS](https://tailwindcss.com/)**: Utility-first CSS framework for styling.
+- **[shadcn](https://ui.shadcn.com/)**: Component library for building accessible, composable UI.
+- **[Redux](https://redux-toolkit.js.org/)**: State management library for predictable state handling.
+- **[Recharts](https://recharts.org/en-US)**: Library for building customizable charts and graphs.
+- **[Bun](https://bun.sh/)**: Fast JavaScript runtime and package manager.
+- **[Vercel](https://vercel.com/)**: Deployment platform for frontend applications.
+
+## Features
+
+- 📝 **User Input:** Collects user information such as name and weight (used to calculate calories burned).
+- 📊 **Dashboard:** Displays metrics including weight, total steps, average step count, distance covered, and calories burned.
+- 🦶 **Step Logging:** Users can record their daily steps, which are displayed in a table with date, steps, distance traveled, and action buttons to edit or delete entries.
+- 📈 **Progress Visualization:** Graphs to showcase the user's step progress over time.
+- ⚠️ **Error Handling:** The app validates user input and displays appropriate error messages for invalid data or actions.
+- 📱 **Responsive Design:** Optimized for both mobile and desktop devices.
+
+## Live Demo
+
+Check out the app live: [Steptember](https://steptember.vercel.app/)
 
 ## Getting Started
 
-First, run the development server:
+This project uses the [Bun](https://bun.sh) package manager. To get started, make sure you have Bun installed. (or use `npm` 😛)
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/jaypancholi94/steptember.git
+cd steptember
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+### 3. Run the Application
+
+To start the app in development mode:
 
 ```bash
 npm run dev
@@ -14,23 +65,4 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The app will be available at <http://localhost:3000>.
